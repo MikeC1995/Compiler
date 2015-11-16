@@ -1,0 +1,349 @@
+***Instructions***
+In order to run the compiler, you must have (MY) versions of the following files in one folder:
+  camle.java
+  Cg.java
+  CGOptimiser.java
+  Irt.java
+  IRTOptimiser.java
+  IRTree.java
+  Lex.g
+  Memory.java
+  Register.java
+  Syn.g
+  TokenConv.java
+
+You must also have the correct version of ANTLR installed, as well as javac.
+To compile the compiler:
+  antlr3 Lex.g
+  antlr3 Syn.g
+  javac TokenConv.java
+  java TokenConv Syn.tokens Irt.java
+  antlr3 *.java
+
+To compile test.w with my compiler (this produces a file test.ass):
+  antlr3 camle test.w
+  
+(In addition to the standard camle options, I have added -opt, which will print the IRT after optimisation.)
+
+To run test.ass:
+  ./assmule test.ass
+
+***Language Features***
+I have successfully implemented all language features described by the coursework specification:
+  -Variables and assignment
+  -Arithmetic expressions
+  -Read and Write statements
+  -If-else and skip statements
+  -While loops
+  -Boolean expressions
+I have also extended the language, and improved the compiler with extra features, which are described later.
+
+The emulator output for each of the provided test files is given below:
+  
+  **TEST 1**
+      snowy:camle$ ./assmule test1.ass
+      ASS/MULE - ASSembler/eMUlator for Language Engineering - v2.7 - Steve Gregory
+      ---test1.ass ASSEMBLY BEGINS
+      ---test1.ass ASSEMBLY ENDS
+      ---test1.ass EXECUTION BEGINS
+      10023
+      10023
+      76
+      76
+      ---test1.ass EXECUTION ENDS
+      STATISTICS:
+        23 instructions generated
+        3 registers used
+        23 instructions executed
+
+  **TEST 2**
+      snowy:camle$ ./assmule test2.ass
+      ASS/MULE - ASSembler/eMUlator for Language Engineering - v2.7 - Steve Gregory
+      ---test2.ass ASSEMBLY BEGINS
+      ---test2.ass ASSEMBLY ENDS
+      ---test2.ass EXECUTION BEGINS
+      7
+      -5
+      28
+      -91
+      70
+      ---test2.ass EXECUTION ENDS
+      STATISTICS:
+        18 instructions generated
+        3 registers used
+        18 instructions executed
+  
+  **TEST 3**
+      snowy:camle$ ./assmule test3.ass
+      ASS/MULE - ASSembler/eMUlator for Language Engineering - v2.7 - Steve Gregory
+      ---test3.ass ASSEMBLY BEGINS
+      ---test3.ass ASSEMBLY ENDS
+      ---test3.ass EXECUTION BEGINS
+      Enter a number: 1
+      Enter a number: 2
+      First is 1; second is 2
+      ---test3.ass EXECUTION ENDS
+      STATISTICS:
+        16 instructions generated
+        3 registers used
+        16 instructions executed
+
+  **TEST 4**
+      snowy:camle$ ./assmule test4.ass
+      ASS/MULE - ASSembler/eMUlator for Language Engineering - v2.7 - Steve Gregory
+      ---test4.ass ASSEMBLY BEGINS
+      ---test4.ass ASSEMBLY ENDS
+      ---test4.ass EXECUTION BEGINS
+      13
+      5
+
+      78bce
+      ---test4.ass EXECUTION ENDS
+      STATISTICS:
+        48 instructions generated
+        3 registers used
+        31 instructions executed
+  
+  **TEST 5**
+      snowy:camle$ ./assmule -j test5.ass
+      ASS/MULE - ASSembler/eMUlator for Language Engineering - v2.7 - Steve Gregory
+      ---test5.ass ASSEMBLY BEGINS
+      ---test5.ass ASSEMBLY ENDS
+      ---test5.ass EXECUTION BEGINS
+      1
+      WARNING: Disabled backward jump in    4: JMP 2
+      3
+      WARNING: Disabled backward jump in   11: JMP 9
+      7
+      WARNING: Disabled backward jump in   20: JMP 18
+      b
+      WARNING: Disabled backward jump in   29: JMP 28
+      c
+      WARNING: Disabled backward jump in   31: JMP 30
+      d
+      WARNING: Disabled backward jump in   33: JMP 32
+      WARNING: Disabled backward jump in   34: JMP 30
+      ---test5.ass EXECUTION ENDS
+      STATISTICS:
+        36 instructions generated
+        3 registers used
+        23 instructions executed
+
+  **TEST 6**
+      snowy:camle$ ./assmule test6.ass
+      ASS/MULE - ASSembler/eMUlator for Language Engineering - v2.7 - Steve Gregory
+      ---test6.ass ASSEMBLY BEGINS
+      ---test6.ass ASSEMBLY ENDS
+      ---test6.ass EXECUTION BEGINS
+      truefalsefalsetruetruefalsefalsefalsetruefalsefalsefalsefalse
+      ---test6.ass EXECUTION ENDS
+      STATISTICS:
+        116 instructions generated
+        9 registers used
+        94 instructions executed
+
+  **TEST 7**
+      snowy:camle$ ./assmule test7.ass
+      ASS/MULE - ASSembler/eMUlator for Language Engineering - v2.7 - Steve Gregory
+      ---test7.ass ASSEMBLY BEGINS
+      ---test7.ass ASSEMBLY ENDS
+      ---test7.ass EXECUTION BEGINS
+      Factorial calculator
+      Enter number: 5
+      Factorial of 5 is 120
+
+      Exponential calculator
+      Enter base: 2
+      Enter exponent: 8
+      2 raised to the power of 8 is 256
+      ---test7.ass EXECUTION ENDS
+      STATISTICS:
+        87 instructions generated
+        7 registers used
+        267 instructions executed
+
+*******************************EXTRAS*******************************
+  ***LANGUAGE FEATURES***
+  Negative numbers:   The language now permits the use of minus ('-') as a unary operator,
+                      (in front of numbers only).
+                      For example, write(-2*-5) will print 10.
+  Real numbers:       Real numbers are now permitted by the language. For example, the number
+                      "thirty-two point zero zero one" can be written as either 320.01 or 3.2001e2.
+                      The decimal point is necessary in both formats. Real numbers can be in expressions,
+                      just like integers, however the two types cannot be mixed. (This is checked at
+                      compile-time. More on this in the section "Error Checking"). The compiler decides
+                      which form of addition, subtraction etc. should be used by inspecting the types of
+                      the arguments.
+  OR, XOR:            The boolean operators OR and XOR have also been implemented. They have the same
+                      precedence as AND. They are written '|' (OR) and '^' (XOR).
+  DIV:                Both integer and real division has been implemented. Both forms of division use the
+                      operator '/', and the compiler decides which form of division to use based on the
+                      types of arguments in the division.
+  Comparisons:        Further relational operators have been implemented. The full set is now:
+                      Equal ('='), not equal ('!='), greater-than ('>'), less-than ('<'),
+                      greater-than-equal ('>='), less-than-equal ('<=').
+                      Since the assembly code uses arithmetic operations in performing comparisons, the
+                      type of the arguments is inspected to ascertain whether real or integer operations
+                      are required.
+  For-loops:          For-loops have been implemented with the following syntax:
+                          for <var> st <bool-expression> step <var>:=<expression> do ( <statements> )
+                      Note:   -the variable must have been assigned prior to use in the for-loop
+                              -verfication as to whether the boolean expression is actually boolean
+                               takes place in Irt, rather than Syn, due to the nature of my parser,
+                               (see "Other" for more info.)
+                              -variable used in the step does not necessarily have to be the same variable
+                              used in the loop condition, although this is usually the case.
+  Functions:          I began implementing functions but unfortunately did not have enough time to complete
+                      this task. Nonetheless I thought I'd mention the work I'd done so far:
+                      Functions are defined with the following syntax:
+                          function args[a,b,...] name ( <statements> )
+                      Functions are called with the following syntax:
+                          call(name[a,b,...])
+                      This syntax is recognised by my parser.
+                      Irt can produce an IRTree for the function definition, which:
+                        -starts with a jump past the function (so it isnt run until explicitly called)
+                        -labels the start of the function statements
+                        -builds the statements tree
+                        -has a jump call to the address obtained when popping the stack (more on this later)
+                        -labels the end of the function
+                      The function call looks like:
+                        -store the arguments into the correct variables
+                        -push the 'call label' onto the stack
+                        -jump to the function statements
+                        -label the 'call label'
+                      Memory.java allocates a section at the end of the memory as a stack. R1 is always free
+                      and is used as a stack pointer. When Cq encounters a STACK->PUSH->LABEL, it does:
+                        ADDI R1,R1,4      Increments the stack pointer
+                        IADDR Rx,LABEL    Stores the address of the labelt to push in Rx
+                        STORE Rx,R1,0     Stores Rx in the position in memory given by the stack pointer
+                      When Cg encounters a JUMP with a STACK subtree, it knows it's a pop:
+                        LOAD Rx,R1,0    Loads the address to jump to from the position in memory given bt
+                                        the stack pointer
+                        SUBI R1,R1,4    Decrement the stack pointer
+                      Although the basic system is in place, unfortunately I have not had time to iron out
+                      all the bugs and as such the functions feature remains unfinished.
+                      Notes:  -A function must have at least one argument
+                              -Calls must supply the same number of arguments as the function definition
+                              -All variables are global (scope has not been implemented)
+                              -Variables must be assigned before use in a function definition
+                              -Calls cannot be made from within functions (doing so causes a run-time error)
+                              -Calls must be made after function definitions
+  
+  ***ERROR DETECTION***
+  Error detection takes places across all four stages: lexical analysis, syntax analysis, semantic analysis
+  and code generation. Errors reported from each of these stages will be prefixed respectively with one of
+  the following:  "Lexical Error: ", "Syntax Error: ", "Semantic Error: ", "Code Generation Error: ".
+  
+  Lexical and Syntax errors are reported by ANTLR, but I have overridden the error message to add the
+  necessary prefix, (see @members in Lex.g and Syn.g).
+  
+  Semantic errors are detected and reported by Irt.java. An error is reported if:
+    -An unrecognised token is detected
+    -There are arguments with inconsistent types in a binary operation
+    -There are non-arithmetic type arguments in an arithmetic operation
+    -There are non-boolean type arguments in a boolean operation
+    -There is a non-boolean expression used as a condition in an if-statement, while- or for-loop
+    -There is a use of an unassigned variable
+    -There a function call supplies too many arguments
+  
+  Code Generation errors are detected and reported by Cg.java. An error is reported if an unrecognised
+  IRT (internal) token is detected.
+  
+  ***OPTIMISATIONS***
+  I employ several optimisations in order to improve the performance of programs generated by my compiler.
+  
+1 Unique String Allocation:   Only unique strings are allocated to memory; that is, no same string is
+                              allocated twice. This is done in order to save space if a given string is
+                              used multiple times.
+2 Common String Allocation:   The strings 'false' and 'true' (used when writing booleans) and
+                              '\n' (used by writeln) are always allocated at the start of memory to
+                              addresses 0, 6 and 11 respectively, due to their frequency of use.
+3 Register Disposal:          When a register is no longer needed, it can be disposed of with the method
+                              disposeRegister() of the Register class. This method then makes the register
+                              available for use the next time a new register is requested. Whenever a register
+                              is requested in Cg, it is disposed of as soon as it is no longer needed,
+                              ensuring that registers are recycled and that their use is minimal.
+4 Constant R0:                R0 is always set to zero so that an integer constant I can be moved into a
+                              register Rx in just one instruction: ADDI Rx,R0,I
+                              This is a fairly common operation so this makes a noticeable impact on the
+                              number of instructions generated.
+5 Constant Folding:           Expressions involving only constants are evaluated at compile-time rather than
+                              run-time, reducing the number of instructions generated. For example, compiling
+                              i := 3*4 will produce the same assembly as i := 12. For an example of this,
+                              compare the attached files unfolded.w and folded.w; their assembly is identical.
+6 Equivalence Folding:        Similarly, expressions like 3*2=1*6 are evaluated (in this case, to 'true') at
+                              compile-time.
+7 If-Folding:                 If the condition expression for an if-statement is always true or always false
+                              then the conditional jump is changed to an unconditional one to the relevant
+                              part of the if-statement. This usually arises from performing constant and
+                              equivalence folding, described above.
+8 Redundant Jump Removal:     Redundant jumps which jump to the next line are eliminated at compile-time.
+                              These usually arise from performing if-folding, described above.
+9 Duplicate Label Removal:    If there are multiple labels pointing to the same part of the program, the
+                              unnecessary ones are removed and are renamed accordingly throughout the program.
+                              This usually arises from application of the above optimisations.
+                              
+  Optimisation 1 to 4 are implemented in Irt.java.
+  The optimisations 5, 6 and 7 are performed by IRTOptimiser.java, and 8, 9 by CGOptimiser.java.
+  These are used in the relevant places by camle.java.
+  
+  To illustrate the efficacy of the above optimisations, compare the emulator output of running test4.w
+  compiled with and without optimisations 3, 5, 6, 7, 8 and 9:
+  
+  **Unoptimised Output**
+    snowy:camle$ ./assmule test4.ass
+    ASS/MULE - ASSembler/eMUlator for Language Engineering - v2.7 - Steve Gregory
+    ---test4.ass ASSEMBLY BEGINS
+    ---test4.ass ASSEMBLY ENDS
+    ---test4.ass EXECUTION BEGINS
+    13
+    5
+
+    78bce
+    ---test4.ass EXECUTION ENDS
+    STATISTICS:
+      148 instructions generated
+      59 registers used
+      118 instructions executed
+  
+  
+  **Optimised Output**
+    snowy:camle$ ./assmule test4.ass
+    ASS/MULE - ASSembler/eMUlator for Language Engineering - v2.7 - Steve Gregory
+    ---test4.ass ASSEMBLY BEGINS
+    ---test4.ass ASSEMBLY ENDS
+    ---test4.ass EXECUTION BEGINS
+    13
+    5
+
+    78bce
+    ---test4.ass EXECUTION ENDS
+    STATISTICS:
+      48 instructions generated
+      3 registers used
+      31 instructions executed
+
+  ***OTHER***
+  In this category I'd like to bring your attention to my implementation of Syn.g.
+  Implementing the language by directly using the grammar specified in the coursework description
+  requires the use of ANTLR features such as semantic predicates to resolve ambiguities. In order
+  to more gracefully resolve this issue my syntax analyser is built using an operator hierarchy.
+  This allows the precedence of the operators to be tightly controlled, and the introduction of new
+  operators easy. However, it does not distinguish between boolean and arithmetic expressions, (much
+  like C). This is required by the language specification and therefore these errors are caught at the
+  semantic level in Irt.java through use of type-checking, as described in the 'Error Detection' section.
+  
+  
+  ***HOURS***
+  I estimate I spent approximately 30 hours on the 'Extras'.
+  
+  
+  ***STATS***
+  Below listed are the emulator stats produced when running my compiler on the given benchmark program,
+  bullseye.w, (with input size 28 and rings 10):
+  
+    ---bullseye.ass EXECUTION ENDS
+    STATISTICS:
+      118 instructions generated
+      12 registers used
+      1381219 instructions executed

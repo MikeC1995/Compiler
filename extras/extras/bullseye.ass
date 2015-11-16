@@ -1,0 +1,263 @@
+; *** PROGRAM ***
+XOR R0,R0,R0
+ADDI R1,R0,109
+WRS 13
+WRS 11
+WRS 55
+RD R2
+STORE R2,R0,64
+WRS 68
+RD R2
+STORE R2,R0,88
+ADDI R3,R0,0
+LOAD R4,R0,64
+SUB R2,R3,R4
+STORE R2,R0,92
+L1:
+LOAD R2,R0,92
+LOAD R5,R0,64
+ADDI R3,R0,1
+SUB R4,R2,R5
+BEQZ R4,ISTRUE1
+BLTZ R4,ISTRUE1
+XOR R3,R3,R3
+ISTRUE1:
+BEQZ R3,L3
+ADDI R2,R0,0
+LOAD R5,R0,64
+SUB R4,R2,R5
+STORE R4,R0,96
+L4:
+LOAD R5,R0,96
+LOAD R4,R0,64
+ADDI R3,R0,1
+SUB R2,R5,R4
+BEQZ R2,ISTRUE2
+BLTZ R2,ISTRUE2
+XOR R3,R3,R3
+ISTRUE2:
+BEQZ R3,L6
+LOAD R4,R0,96
+LOAD R3,R0,96
+MUL R5,R4,R3
+LOAD R3,R0,92
+LOAD R6,R0,92
+MUL R4,R3,R6
+ADD R2,R5,R4
+STORE R2,R0,100
+ADDI R3,R0,0
+STORE R3,R0,104
+L7:
+ADDI R9,R0,2
+LOAD R10,R0,104
+MUL R8,R9,R10
+ADDI R9,R0,1
+ADD R7,R8,R9
+ADDI R9,R0,2
+LOAD R11,R0,104
+MUL R8,R9,R11
+ADDI R9,R0,1
+ADD R10,R8,R9
+MUL R3,R7,R10
+ADDI R9,R0,2
+LOAD R7,R0,64
+MUL R8,R9,R7
+ADDI R10,R0,1
+ADD R11,R8,R10
+MUL R2,R3,R11
+ADDI R8,R0,2
+LOAD R10,R0,64
+MUL R7,R8,R10
+ADDI R3,R0,1
+ADD R9,R7,R3
+MUL R4,R2,R9
+LOAD R7,R0,100
+ADDI R3,R0,4
+MUL R10,R7,R3
+ADDI R7,R0,2
+LOAD R3,R0,88
+MUL R9,R7,R3
+ADDI R7,R0,1
+SUB R2,R9,R7
+MUL R8,R10,R2
+ADDI R7,R0,2
+LOAD R10,R0,88
+MUL R9,R7,R10
+ADDI R2,R0,1
+SUB R3,R9,R2
+MUL R11,R8,R3
+ADDI R6,R0,1
+SUB R5,R4,R11
+BEQZ R5,ISTRUE3
+BLTZ R5,ISTRUE3
+XOR R6,R6,R6
+ISTRUE3:
+BEQZ R6,L9
+LOAD R10,R0,104
+ADDI R9,R0,1
+ADD R7,R10,R9
+STORE R7,R0,104
+JMP L7
+L9:
+LOAD R3,R0,88
+LOAD R5,R0,104
+ADDI R2,R0,1
+SUB R8,R3,R5
+BEQZ R8,ISTRUE4
+BLTZ R8,ISTRUE4
+XOR R2,R2,R2
+ISTRUE4:
+BEQZ R2,L11
+WRS 108
+JMP L12
+L11:
+LOAD R4,R0,104
+WR R4
+L12:
+WRS 108
+LOAD R6,R0,96
+ADDI R10,R0,1
+ADD R11,R6,R10
+STORE R11,R0,96
+JMP L4
+L6:
+WRS 11
+LOAD R7,R0,92
+ADDI R8,R0,1
+ADD R9,R7,R8
+STORE R9,R0,92
+JMP L1
+L3:
+HALT
+; *** INITIAL MEMORY CONTENTS ***
+; *** (TRUE, FALSE and NEWLINE ALWAYS ADDED) ***
+DATA 102 ; f   Mem. addr: 0
+DATA 97 ; a   Mem. addr: 1
+DATA 108 ; l   Mem. addr: 2
+DATA 115 ; s   Mem. addr: 3
+DATA 101 ; e   Mem. addr: 4
+DATA 0 ;    Mem. addr: 5
+DATA 116 ; t   Mem. addr: 6
+DATA 114 ; r   Mem. addr: 7
+DATA 117 ; u   Mem. addr: 8
+DATA 101 ; e   Mem. addr: 9
+DATA 0 ;    Mem. addr: 10
+DATA 10 ;    Mem. addr: 11
+DATA 0 ;    Mem. addr: 12
+DATA 82 ; R   Mem. addr: 13
+DATA 101 ; e   Mem. addr: 14
+DATA 99 ; c   Mem. addr: 15
+DATA 111 ; o   Mem. addr: 16
+DATA 109 ; m   Mem. addr: 17
+DATA 109 ; m   Mem. addr: 18
+DATA 101 ; e   Mem. addr: 19
+DATA 110 ; n   Mem. addr: 20
+DATA 100 ; d   Mem. addr: 21
+DATA 101 ; e   Mem. addr: 22
+DATA 100 ; d   Mem. addr: 23
+DATA 32 ;     Mem. addr: 24
+DATA 112 ; p   Mem. addr: 25
+DATA 97 ; a   Mem. addr: 26
+DATA 114 ; r   Mem. addr: 27
+DATA 97 ; a   Mem. addr: 28
+DATA 109 ; m   Mem. addr: 29
+DATA 101 ; e   Mem. addr: 30
+DATA 116 ; t   Mem. addr: 31
+DATA 101 ; e   Mem. addr: 32
+DATA 114 ; r   Mem. addr: 33
+DATA 115 ; s   Mem. addr: 34
+DATA 58 ; :   Mem. addr: 35
+DATA 32 ;     Mem. addr: 36
+DATA 115 ; s   Mem. addr: 37
+DATA 105 ; i   Mem. addr: 38
+DATA 122 ; z   Mem. addr: 39
+DATA 101 ; e   Mem. addr: 40
+DATA 61 ; =   Mem. addr: 41
+DATA 50 ; 2   Mem. addr: 42
+DATA 56 ; 8   Mem. addr: 43
+DATA 44 ; ,   Mem. addr: 44
+DATA 32 ;     Mem. addr: 45
+DATA 114 ; r   Mem. addr: 46
+DATA 105 ; i   Mem. addr: 47
+DATA 110 ; n   Mem. addr: 48
+DATA 103 ; g   Mem. addr: 49
+DATA 115 ; s   Mem. addr: 50
+DATA 61 ; =   Mem. addr: 51
+DATA 49 ; 1   Mem. addr: 52
+DATA 48 ; 0   Mem. addr: 53
+DATA 0 ;    Mem. addr: 54
+DATA 83 ; S   Mem. addr: 55
+DATA 105 ; i   Mem. addr: 56
+DATA 122 ; z   Mem. addr: 57
+DATA 101 ; e   Mem. addr: 58
+DATA 58 ; :   Mem. addr: 59
+DATA 32 ;     Mem. addr: 60
+DATA 0 ;    Mem. addr: 61
+DATA 0 ;    Mem. addr: 62
+DATA 0 ;    Mem. addr: 63
+DATA 0 ;  size  Mem. addr: 64
+DATA 0 ;    Mem. addr: 65
+DATA 0 ;    Mem. addr: 66
+DATA 0 ;    Mem. addr: 67
+DATA 78 ; N   Mem. addr: 68
+DATA 117 ; u   Mem. addr: 69
+DATA 109 ; m   Mem. addr: 70
+DATA 98 ; b   Mem. addr: 71
+DATA 101 ; e   Mem. addr: 72
+DATA 114 ; r   Mem. addr: 73
+DATA 32 ;     Mem. addr: 74
+DATA 111 ; o   Mem. addr: 75
+DATA 102 ; f   Mem. addr: 76
+DATA 32 ;     Mem. addr: 77
+DATA 114 ; r   Mem. addr: 78
+DATA 105 ; i   Mem. addr: 79
+DATA 110 ; n   Mem. addr: 80
+DATA 103 ; g   Mem. addr: 81
+DATA 115 ; s   Mem. addr: 82
+DATA 58 ; :   Mem. addr: 83
+DATA 32 ;     Mem. addr: 84
+DATA 0 ;    Mem. addr: 85
+DATA 0 ;    Mem. addr: 86
+DATA 0 ;    Mem. addr: 87
+DATA 0 ;  nRings  Mem. addr: 88
+DATA 0 ;    Mem. addr: 89
+DATA 0 ;    Mem. addr: 90
+DATA 0 ;    Mem. addr: 91
+DATA 0 ;  y  Mem. addr: 92
+DATA 0 ;    Mem. addr: 93
+DATA 0 ;    Mem. addr: 94
+DATA 0 ;    Mem. addr: 95
+DATA 0 ;  x  Mem. addr: 96
+DATA 0 ;    Mem. addr: 97
+DATA 0 ;    Mem. addr: 98
+DATA 0 ;    Mem. addr: 99
+DATA 0 ;  distSq  Mem. addr: 100
+DATA 0 ;    Mem. addr: 101
+DATA 0 ;    Mem. addr: 102
+DATA 0 ;    Mem. addr: 103
+DATA 0 ;  ring  Mem. addr: 104
+DATA 0 ;    Mem. addr: 105
+DATA 0 ;    Mem. addr: 106
+DATA 0 ;    Mem. addr: 107
+DATA 32 ;     Mem. addr: 108
+DATA 0 ;    Mem. addr: 109
+DATA 0 ;  CALL_STACK  Mem. addr: 110
+DATA 0 ;  CALL_STACK  Mem. addr: 111
+DATA 0 ;  CALL_STACK  Mem. addr: 112
+DATA 0 ;  CALL_STACK  Mem. addr: 113
+DATA 0 ;  CALL_STACK  Mem. addr: 114
+DATA 0 ;  CALL_STACK  Mem. addr: 115
+DATA 0 ;  CALL_STACK  Mem. addr: 116
+DATA 0 ;  CALL_STACK  Mem. addr: 117
+DATA 0 ;  CALL_STACK  Mem. addr: 118
+DATA 0 ;  CALL_STACK  Mem. addr: 119
+DATA 0 ;  CALL_STACK  Mem. addr: 120
+DATA 0 ;  CALL_STACK  Mem. addr: 121
+DATA 0 ;  CALL_STACK  Mem. addr: 122
+DATA 0 ;  CALL_STACK  Mem. addr: 123
+DATA 0 ;  CALL_STACK  Mem. addr: 124
+DATA 0 ;  CALL_STACK  Mem. addr: 125
+DATA 0 ;  CALL_STACK  Mem. addr: 126
+DATA 0 ;  CALL_STACK  Mem. addr: 127
+DATA 0 ;  CALL_STACK  Mem. addr: 128
+DATA 0 ;  CALL_STACK  Mem. addr: 129

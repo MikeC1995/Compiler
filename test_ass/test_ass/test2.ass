@@ -1,0 +1,54 @@
+; *** PROGRAM ***
+XOR R0,R0,R0
+ADDI R1,R0,12
+ADDI R2,R0,7
+WR R2
+WRS 11
+ADDI R2,R0,-5
+WR R2
+WRS 11
+ADDI R2,R0,28
+WR R2
+WRS 11
+ADDI R2,R0,-91
+WR R2
+WRS 11
+ADDI R2,R0,70
+WR R2
+WRS 11
+HALT
+; *** INITIAL MEMORY CONTENTS ***
+; *** (TRUE, FALSE and NEWLINE ALWAYS ADDED) ***
+DATA 102 ; f   Mem. addr: 0
+DATA 97 ; a   Mem. addr: 1
+DATA 108 ; l   Mem. addr: 2
+DATA 115 ; s   Mem. addr: 3
+DATA 101 ; e   Mem. addr: 4
+DATA 0 ;    Mem. addr: 5
+DATA 116 ; t   Mem. addr: 6
+DATA 114 ; r   Mem. addr: 7
+DATA 117 ; u   Mem. addr: 8
+DATA 101 ; e   Mem. addr: 9
+DATA 0 ;    Mem. addr: 10
+DATA 10 ;    Mem. addr: 11
+DATA 0 ;    Mem. addr: 12
+DATA 0 ;  CALL_STACK  Mem. addr: 13
+DATA 0 ;  CALL_STACK  Mem. addr: 14
+DATA 0 ;  CALL_STACK  Mem. addr: 15
+DATA 0 ;  CALL_STACK  Mem. addr: 16
+DATA 0 ;  CALL_STACK  Mem. addr: 17
+DATA 0 ;  CALL_STACK  Mem. addr: 18
+DATA 0 ;  CALL_STACK  Mem. addr: 19
+DATA 0 ;  CALL_STACK  Mem. addr: 20
+DATA 0 ;  CALL_STACK  Mem. addr: 21
+DATA 0 ;  CALL_STACK  Mem. addr: 22
+DATA 0 ;  CALL_STACK  Mem. addr: 23
+DATA 0 ;  CALL_STACK  Mem. addr: 24
+DATA 0 ;  CALL_STACK  Mem. addr: 25
+DATA 0 ;  CALL_STACK  Mem. addr: 26
+DATA 0 ;  CALL_STACK  Mem. addr: 27
+DATA 0 ;  CALL_STACK  Mem. addr: 28
+DATA 0 ;  CALL_STACK  Mem. addr: 29
+DATA 0 ;  CALL_STACK  Mem. addr: 30
+DATA 0 ;  CALL_STACK  Mem. addr: 31
+DATA 0 ;  CALL_STACK  Mem. addr: 32
